@@ -1,11 +1,11 @@
-package Tests;
+package Basics;
 
 import Base.BaseTest;
 import org.openqa.selenium.By;
 import org.testng.annotations.Test;
 
-public class LoginTest extends BaseTest {
-    
+public class LoginBasicsImproved extends BaseTest {
+
     @Test(priority = 1)
     public  void LoginToApplication() throws InterruptedException {
         driver.findElement(By.xpath("//button[@class='user-pill']")).click();

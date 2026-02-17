@@ -4,10 +4,14 @@ import com.aventstack.extentreports.ExtentReports;
 import com.aventstack.extentreports.reporter.ExtentSparkReporter;
 
 import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 
 public class ExtentReportManager {
 
-    private static String reportDir=System.getProperty("user.dir") +"/Reports/sauceDemo.html";
+    private static String reportDir=System.getProperty("user.dir") +"/target/reports/NdosiAutomationReport.html";
 
     private static ExtentReports extentReports;
     private static ExtentSparkReporter extentSparkReporter;

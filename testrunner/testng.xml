@@ -1,0 +1,11 @@
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite name="All Test Suite">
+    <listeners>
+        <listener class-name="ExtentsReports.Listener"/>
+    </listeners>
+    <test thread-count="1" name="Test Suite">
+        <classes>
+            <class name="Tests.LoginTestReadXLSDataWaits"/>
+        </classes>
+    </test>
+</suite>

@@ -1,32 +1,30 @@
-package utils;
+package Utilities; // package for utility helpers
 
-import org.openqa.selenium.OutputType;
-import org.openqa.selenium.TakesScreenshot;
-import org.openqa.selenium.WebDriver;
+import org.apache.commons.io.FileUtils;
+import org.openqa.selenium.OutputType; // OutputType enum for screenshot formats
+import org.openqa.selenium.TakesScreenshot; // interface for drivers that can take screenshots
+import org.openqa.selenium.WebDriver; // WebDriver interface
 
-import java.io.File;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
+import java.io.File; // File class for file operations
+import java.nio.file.Files; // Files utility for file operations
+import java.nio.file.Path; // Path type for file paths
+import java.nio.file.Paths; // Paths helper to build Path
 
-public final class ScreenshotUtil {
+public final class Screenshots { // utility class for capturing screenshots
 
-    private ScreenshotUtil() {}
+    private static final String screenshotDir = System.getProperty("user.dir") + "/target/screenshots";
 
-    public static String capture(WebDriver driver, String testName) {
+
+    public void takesSnapShot(WebDriver driver, String screenshotName) {
+        TakesScreenshot takesScreenshot = (TakesScreenshot) driver;
+        File src = takesScreenshot.getScreenshotAs(OutputType.FILE);
+        System.out.printf("FileDir: ", screenshotDir);
+        File destination = new File(screenshotDir, screenshotName + ".jpeg");
+
         try {
-            Path dir = Paths.get("test-output", "screenshots");
-            Files.createDirectories(dir);
-
-            String safeName = testName.replaceAll("[^a-zA-Z0-9._-]", "_");
-            Path destination = dir.resolve(safeName + "_" + System.currentTimeMillis() + ".png");
-
-            File src = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
-            Files.copy(src.toPath(), destination);
-
-            return destination.toString();
+            FileUtils.copyFile(src, destination);
         } catch (Exception e) {
-            return null;
+            e.printStackTrace();
         }
     }
 }
