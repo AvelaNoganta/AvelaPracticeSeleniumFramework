@@ -5,19 +5,36 @@ import Pages.LoginPageWithWaits;
 import Utilities.BrowserFactory;
 import Utilities.Screenshots;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.support.PageFactory;
-import org.testng.annotations.AfterTest;
+import org.testng.annotations.AfterClass;
+import org.testng.annotations.BeforeClass;
+
+import java.time.Duration;
 
 public class BaseTest {
-    BrowserFactory browserFactory = new BrowserFactory();
 
-    public final WebDriver driver = browserFactory.startBrowser("chrome", "https://www.ndosiautomation.co.za/");
-    public LoginPage loginPage= PageFactory.initElements(driver, LoginPage.class);
-    public LoginPageWithWaits loginPageWithWaits= PageFactory.initElements(driver, LoginPageWithWaits.class);
-    public Screenshots takeScreenshots = new Screenshots();
+    protected WebDriver driver;
+    protected LoginPage loginPage;
+    protected LoginPageWithWaits loginPageWithWaits;
+    protected Screenshots screenshots;  // ✅ declare here
 
-    @AfterTest
+    public final String url = "https://ndosisimplifiedautomation.vercel.app/";
+    public final String browserChoice = "chrome";
+
+    @BeforeClass
+    public void setUp() {
+        driver = BrowserFactory.startBrowser(browserChoice, url);
+
+        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(5));
+
+        loginPage = new LoginPage(driver);
+        loginPageWithWaits = new LoginPageWithWaits(driver);
+        screenshots = new Screenshots();  // ✅ initialize here
+    }
+
+    @AfterClass
     public void tearDown() {
-        driver.quit();
+        if (driver != null) {
+            driver.quit();
+        }
     }
 }

@@ -10,20 +10,20 @@ public class LoginTest extends BaseTest {
     public void LoginToApplication() throws InterruptedException {
        loginPage.clickLoginButton();
         Thread.sleep(2000);
-        takeScreenshots.takesSnapShot(driver, "LoginToApplication");
+        //takeScreenshots.takesSnapShot(driver, "LoginToApplication");
     }
 
     @Test(priority = 2)
     public void verifyLoginPage() throws InterruptedException {
         loginPage.verifyLoginPageIsDisplayed();
-        takeScreenshots.takesSnapShot(driver, "verifyLoginPage");
+        //takeScreenshots.takesSnapShot(driver, "verifyLoginPage");
     }
 
     @Test(priority = 3,dataProvider = "testdata")
     public void enterUsernameAndPassword(String username, String password) throws InterruptedException {
         loginPage.enterEmailAddress(username);
         loginPage.enterPassword(password);
-        takeScreenshots.takesSnapShot(driver, "enterUsernameAndPassword");
+        //takeScreenshots.takesSnapShot(driver, "enterUsernameAndPassword");
         Thread.sleep(2000);
     }
 
@@ -31,7 +31,7 @@ public class LoginTest extends BaseTest {
     public void clickLoginButton() throws InterruptedException {
         loginPage.clickSubmitButton();
         Thread.sleep(2000);
-        takeScreenshots.takesSnapShot(driver, "clickLoginButton");
+        //takeScreenshots.takesSnapShot(driver, "clickLoginButton");
     }
 
     @DataProvider(name = "testdata")

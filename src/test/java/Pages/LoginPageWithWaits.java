@@ -11,61 +11,54 @@ import java.time.Duration;
 
 public class LoginPageWithWaits {
 
+    public WebDriver driver;
+    public WebDriverWait wait;
 
-    WebDriver driver;
-    private final WebDriverWait wait;
-
-    @FindBy(xpath = "//button[@class='user-pill']")
-    WebElement login_button;
-
-    @FindBy(xpath = "//*[@id='login-heading']/span")
-    WebElement loginPage_title;
-
-    @FindBy(id = "login-email")
-    WebElement login_email_field;
-
-    @FindBy(id = "login-password")
-    WebElement login_password_field;
-
-    @FindBy(id = "login-submit")
-    WebElement login_submit_button;
-
+    // ✅ Constructor receives driver from BaseTest
     public LoginPageWithWaits(WebDriver driver) {
-        if (driver == null) {
-            throw new IllegalArgumentException("WebDriver passed to LoginPageWithWaits is null. Initialize driver before creating the page object.");
-        }
         this.driver = driver;
+        this.wait = new WebDriverWait(driver, Duration.ofSeconds(15));
         PageFactory.initElements(driver, this);
-        this.wait = new WebDriverWait(driver, Duration.ofSeconds(10));
-
     }
 
+    @FindBy(xpath = "//*[@id='app-root']/nav/div[1]/div[3]/button/span[2]")
+    WebElement loginButton;
+
+    @FindBy(id = "login-email")
+    WebElement loginEmailField;
+
+    @FindBy(id = "login-password")
+    WebElement loginPasswordField;
+
+    @FindBy(id = "login-submit")
+    WebElement loginSubmitButton;
+
+    @FindBy(xpath = "//p[contains(text(), \"Here's an overview of your learning journey\")]")
+    WebElement welcomeBackMessage;
+
     public void clickLoginButton() {
-        wait.until(ExpectedConditions.elementToBeClickable(login_button));
-        login_button.click();
+        wait.until(ExpectedConditions.elementToBeClickable(loginButton)).click();
     }
 
     public void enterEmailAddress(String email) {
-        wait.until(ExpectedConditions.visibilityOf(login_email_field));
-        login_email_field.clear();
-        login_email_field.sendKeys(email);
+        wait.until(ExpectedConditions.visibilityOf(loginEmailField));
+        loginEmailField.sendKeys(email);
     }
 
     public void enterPassword(String password) {
-        wait.until(ExpectedConditions.visibilityOf(login_password_field));
-        login_password_field.clear();
-        login_password_field.sendKeys(password);
-    }
-
-    public void verifyLoginPageIsDisplayed() {
-        wait.until(ExpectedConditions.visibilityOf(loginPage_title));
-        loginPage_title.isDisplayed();
+        wait.until(ExpectedConditions.visibilityOf(loginPasswordField));
+        loginPasswordField.sendKeys(password);
     }
 
     public void clickSubmitButton() {
-        wait.until(ExpectedConditions.elementToBeClickable(login_submit_button));
-        login_submit_button.click();
+        wait.until(ExpectedConditions.elementToBeClickable(loginSubmitButton)).click();
     }
 
-
+    public void verifyLoginSuccess(String expectedMessage) {
+        welcomeBackMessage.isDisplayed();
+        String actualMessage = welcomeBackMessage.getText();
+        if (!actualMessage.equals(expectedMessage)) {
+            throw new AssertionError("Expected message: " + expectedMessage + ", but got: " + actualMessage);
+        }
+    }
 }
