@@ -5,6 +5,7 @@ import Utilities.ReadXLSdata;
 import org.testng.annotations.Test;
 
 public class LoginTestReadXLSDataWaits extends BaseTest {
+
     @Test(priority = 1)
     public void LoginToApplication() throws InterruptedException {
         loginPageWithWaits.clickLoginButton();

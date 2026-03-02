@@ -14,6 +14,7 @@ public class BaseTest {
 
     protected WebDriver driver;
     protected LoginPage loginPage;
+
     protected LoginPageWithWaits loginPageWithWaits;
     protected Screenshots screenshots;  // ✅ declare here
 
