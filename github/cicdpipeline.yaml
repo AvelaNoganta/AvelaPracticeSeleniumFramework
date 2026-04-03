@@ -1,0 +1,35 @@
+# The name of the pipeline shown in GitHub Actions
+name: Selenium CI Pipeline
+
+# This section defines when the pipeline should run
+on:
+  # Run this pipeline whenever code is pushed
+  push:
+    # Only run if the push happens on the main branch
+    branches: [ "main" ]
+
+# A pipeline is made up of jobs
+jobs:
+  # This is the name of the job
+  build:
+    # The job will run on a GitHub-hosted Ubuntu machine
+    runs-on: ubuntu-latest
+
+    # Steps are the actions performed one after another
+    steps:
+      # Step 1: Download the repository code into the runner machine
+      - name: Checkout Code
+        uses: actions/checkout@v5
+
+      # Step 2: Install Java so the project can compile and run
+      - name: Set up Java
+        uses: actions/setup-java@v5
+        with:
+          # Temurin is the Java distribution being used
+          distribution: 'temurin'
+          # Install Java version 21
+          java-version: '21'
+
+      # Step 3: Build the project and run the tests using Maven
+      - name: Build and Run Tests
+        run: mvn clean test -Dheadless=true
